@@ -521,9 +521,9 @@ export const AddStudent = () => {
   const set = (k: keyof FormData, v: any) => setData(prev => ({ ...prev, [k]: v }));
 
   const canNext = () => {
-    if (step === 1) return data.fullName.trim() && data.mobile.trim() && data.gender && data.class === '' === false;
-    if (step === 2) return data.fatherName.trim() && data.fatherMobile.trim();
-    if (step === 3) return data.class && data.board && data.targetExam;
+    if (step === 1) return !!(data.fullName.trim() && data.mobile.trim() && data.gender);
+    if (step === 2) return !!(data.fatherName.trim() && data.fatherMobile.trim());
+    if (step === 3) return !!(data.class && data.board && data.targetExam);
     if (step === 4) return !!data.batchId;
     return true;
   };
