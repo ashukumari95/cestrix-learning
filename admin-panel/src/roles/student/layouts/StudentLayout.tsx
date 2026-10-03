@@ -62,7 +62,7 @@ export const StudentLayout = () => {
             </div>
             <div className="flex-1 min-w-0">
               <p className="text-sm font-medium text-white truncate">
-                {user?.firstName} {user?.lastName}
+                {user?.name || 'Student'}
               </p>
               <p className="text-xs text-slate-400 truncate">{user?.email}</p>
             </div>

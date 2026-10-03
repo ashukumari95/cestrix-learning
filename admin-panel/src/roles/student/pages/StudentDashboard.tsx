@@ -10,7 +10,7 @@ export const StudentDashboard = () => {
     <div className="space-y-6">
       <div className="flex justify-between items-center">
         <div>
-          <h1 className="text-2xl font-bold text-slate-900">Welcome back, {user?.firstName}! 👋</h1>
+          <h1 className="text-2xl font-bold text-slate-900">Welcome back, {user?.name?.split(' ')[0] || 'Student'}! 👋</h1>
           <p className="text-slate-500">Here's your learning overview for today.</p>
         </div>
       </div>

@@ -222,7 +222,7 @@ export const AIGenerateModal: React.FC<AIGenerateModalProps> = ({ onClose, onSuc
                     </div>
                     {q.options && q.options.length > 0 && (
                       <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 mt-3 pl-6">
-                        {q.options.map((opt, oIdx) => (
+                        {q.options.map((opt: any, oIdx: number) => (
                           <div key={oIdx} className={`p-2 rounded-lg text-sm border ${opt.isCorrect ? 'bg-green-50 border-green-200 text-green-800 font-medium' : 'bg-white border-gray-200 text-gray-600'}`}>
                             {String.fromCharCode(65 + oIdx)}. {opt.text} {opt.isCorrect && '✓'}
                           </div>

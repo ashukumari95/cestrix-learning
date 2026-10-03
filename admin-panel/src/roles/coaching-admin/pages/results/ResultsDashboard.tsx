@@ -62,7 +62,7 @@ export const ResultsDashboard: React.FC = () => {
       `${Number(attempt.percentile).toFixed(1)}%`,
       new Date(attempt.endTime).toLocaleString()
     ]);
-    const csvContent = [headers.join(','), ...rows.map(row => row.map(cell => `"${cell}"`).join(','))].join('\n');
+    const csvContent = [headers.join(','), ...rows.map((row: any[]) => row.map((cell: any) => `"${cell}"`).join(','))].join('\n');
     const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
     const link = document.createElement('a');
     const url = URL.createObjectURL(blob);
