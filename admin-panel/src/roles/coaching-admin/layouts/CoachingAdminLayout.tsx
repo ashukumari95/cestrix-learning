@@ -4,7 +4,7 @@ import {
   LayoutDashboard, Users, GraduationCap, BookOpen,
   FileQuestion, FileText, Award, CreditCard, CalendarCheck,
   Bell, Search, Settings, Layers, Bot, User,
-  ChevronDown, Sparkles, LogOut, Zap
+  ChevronDown, Sparkles, LogOut, Zap, Menu, X
 } from 'lucide-react';
 import { useOrganization, type Module } from '../context/OrganizationContext';
 import { useAuth } from '../../../context/AuthContext';
@@ -63,12 +63,12 @@ const NAV_GROUPS: NavGroup[] = [
 ];
 
 // ── Sidebar NavLink ──────────────────────────────────────────────────────────
-const NavLink = ({ icon: Icon, label, path, badge }: { icon: any; label: string; path: string; badge?: string }) => {
+const NavLink = ({ icon: Icon, label, path, badge, onClick }: { icon: any; label: string; path: string; badge?: string; onClick?: () => void }) => {
   const location = useLocation();
   const isActive = location.pathname === path || (path !== '/' && location.pathname.startsWith(path));
 
   return (
-    <Link to={path} className={`cx-nav-link${isActive ? ' active' : ''}`}>
+    <Link to={path} onClick={onClick} className={`cx-nav-link${isActive ? ' active' : ''}`}>
       <Icon size={17} strokeWidth={isActive ? 2.5 : 2} />
       <span className="flex-1 truncate">{label}</span>
       {badge && (
@@ -89,15 +89,33 @@ export const CoachingAdminLayout = () => {
   const { orgName, adminName, activeModules } = useOrganization();
   const { setRole, logout } = useAuth();
   const [searchFocused, setSearchFocused] = useState(false);
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   return (
     <div className="min-h-screen flex" style={{ fontFamily: "'Inter', sans-serif" }}>
 
+      {/* ── Sidebar Mobile Overlay ── */}
+      {isMobileMenuOpen && (
+        <div 
+          className="fixed inset-0 bg-black/50 z-40 md:hidden backdrop-blur-sm transition-opacity"
+          onClick={() => setIsMobileMenuOpen(false)}
+        />
+      )}
+
       {/* ── Sidebar ── */}
       <aside
-        className="w-[260px] flex-shrink-0 flex-col hidden md:flex fixed top-0 left-0 h-screen z-30 overflow-hidden"
+        className={`w-[260px] flex-shrink-0 flex-col fixed top-0 left-0 h-screen z-50 overflow-hidden transition-transform duration-300 ease-in-out md:translate-x-0 flex ${
+          isMobileMenuOpen ? 'translate-x-0' : '-translate-x-full'
+        }`}
         style={{ background: 'linear-gradient(180deg, #001233 0%, #001845 100%)' }}
       >
+        {/* Mobile close button */}
+        <button 
+          onClick={() => setIsMobileMenuOpen(false)}
+          className="md:hidden absolute top-4 right-4 z-50 p-2 text-white/70 hover:text-white bg-white/10 rounded-lg"
+        >
+          <X size={20} />
+        </button>
         {/* Subtle top glow — Navy blue */}
         <div className="absolute top-0 left-0 right-0 h-40 pointer-events-none"
           style={{ background: 'radial-gradient(ellipse at 50% -20%, rgba(26,93,201,0.3) 0%, transparent 70%)' }} />
@@ -148,7 +166,7 @@ export const CoachingAdminLayout = () => {
               <div key={group.section}>
                 <p className="cx-nav-section">{group.section}</p>
                 {visible.map((item) => (
-                  <NavLink key={item.path} {...item} />
+                  <NavLink key={item.path} {...item} onClick={() => setIsMobileMenuOpen(false)} />
                 ))}
               </div>
             );
@@ -180,18 +198,26 @@ export const CoachingAdminLayout = () => {
       <div className="flex-1 md:ml-[260px] flex flex-col min-h-screen">
 
         {/* ── Top Header ── */}
-        <header className="h-[60px] sticky top-0 z-20 flex items-center justify-between px-6 lg:px-8"
+        <header className="h-[60px] sticky top-0 z-20 flex items-center justify-between px-4 lg:px-8"
           style={{
             background: 'rgba(240, 244, 250, 0.9)',
             backdropFilter: 'blur(16px)',
             borderBottom: '1px solid rgba(26,93,201,0.15)',
           }}>
 
-          {/* Breadcrumb */}
-          <div className="flex items-center gap-2 text-sm">
-            <span className="font-semibold" style={{ color: '#1a5dc9' }}>Cestrix</span>
-            <span style={{ color: '#9dbcee' }}>/</span>
-            <span className="font-medium text-gray-600">Admin Panel</span>
+          {/* Left Area (Menu + Breadcrumb) */}
+          <div className="flex items-center gap-3">
+            <button 
+              className="md:hidden p-2 -ml-2 rounded-lg text-gray-600 hover:bg-gray-100 transition-colors"
+              onClick={() => setIsMobileMenuOpen(true)}
+            >
+              <Menu size={20} />
+            </button>
+            <div className="flex items-center gap-2 text-sm">
+              <span className="font-semibold" style={{ color: '#1a5dc9' }}>Cestrix</span>
+              <span style={{ color: '#9dbcee' }}>/</span>
+              <span className="font-medium text-gray-600 hidden sm:inline">Admin Panel</span>
+            </div>
           </div>
 
           {/* Right Actions */}
