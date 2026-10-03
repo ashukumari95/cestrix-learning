@@ -1,0 +1,161 @@
+@import "tailwindcss";
+
+/* ── CESTRIX × GMR DESIGN SYSTEM ─────────────────────────────────────────── */
+/* Brand palette: GMR Deep Navy + Crimson Red + Gold — Corporate-Premium      */
+
+@theme {
+  /* Primary: GMR Deep Navy Blue */
+  --color-brand-50:   #e8f0fb;
+  --color-brand-100:  #c5d7f5;
+  --color-brand-200:  #9dbcee;
+  --color-brand-300:  #6f9ee6;
+  --color-brand-400:  #3f7ddd;
+  --color-brand-500:  #1a5dc9;
+  --color-brand-600:  #1448a0;
+  --color-brand-700:  #0e3578;
+  --color-brand-800:  #082352;
+  --color-brand-900:  #03132e;
+  --color-brand-950:  #010a1a;
+
+  /* Accent Red — GMR Crimson */
+  --color-red-brand-50:  #fdeaea;
+  --color-red-brand-100: #f9c5c5;
+  --color-red-brand-200: #f49a9a;
+  --color-red-brand-300: #ee6868;
+  --color-red-brand-400: #e63c3c;
+  --color-red-brand-500: #cc2529;
+  --color-red-brand-600: #a81e22;
+  --color-red-brand-700: #83181a;
+  --color-red-brand-800: #5e1112;
+  --color-red-brand-900: #390b0b;
+
+  /* Accent Gold — GMR Yellow */
+  --color-gold-50:  #fffbe6;
+  --color-gold-100: #fff3b3;
+  --color-gold-200: #ffe980;
+  --color-gold-300: #ffdc4d;
+  --color-gold-400: #ffce1a;
+  --color-gold-500: #f5a623;
+  --color-gold-600: #d4850d;
+  --color-gold-700: #a86500;
+  --color-gold-800: #7a4800;
+  --color-gold-900: #4e2e00;
+
+  /* Sidebar surface: Very deep navy */
+  --color-sidebar:    #001233;
+  --color-sidebar-2:  #001845;
+
+  /* Typography */
+  --font-sans: 'Inter', system-ui, -apple-system, sans-serif;
+  --font-mono: 'JetBrains Mono', monospace;
+}
+
+/* ── GLOBAL BASE ─────────────────────────────────────────────────────────── */
+@layer base {
+  *, *::before, *::after { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: var(--font-sans);
+    background: #f0f4fa;   /* soft cool-blue tint — premium corporate feel */
+    color: #0d1b3e;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  /* Thin branded scrollbar */
+  ::-webkit-scrollbar { width: 5px; height: 5px; }
+  ::-webkit-scrollbar-track { background: transparent; }
+  ::-webkit-scrollbar-thumb { background: #9dbcee; border-radius: 9999px; }
+  ::-webkit-scrollbar-thumb:hover { background: #1a5dc9; }
+}
+
+/* ── CESTRIX COMPONENTS ─────────────────────────────────────────────────── */
+@layer components {
+
+  /* ── Sidebar nav link ── */
+  .cx-nav-link {
+    @apply flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium transition-all duration-200 cursor-pointer select-none;
+    color: rgba(157, 188, 238, 0.7);
+  }
+  .cx-nav-link:hover {
+    background: rgba(26, 93, 201, 0.15);
+    color: #c5d7f5;
+  }
+  .cx-nav-link.active {
+    background: rgba(26, 93, 201, 0.22);
+    color: #c5d7f5;
+    box-shadow: inset 3px 0 0 #1a5dc9;
+  }
+  .cx-nav-link.active svg { filter: drop-shadow(0 0 5px rgba(26,93,201,0.7)); }
+
+  /* ── Section label ── */
+  .cx-nav-section {
+    @apply text-[10px] font-bold tracking-[0.14em] uppercase px-3 pt-5 pb-1.5;
+    color: rgba(26, 93, 201, 0.5);
+  }
+
+  /* ── Card ── */
+  .cx-card {
+    @apply bg-white rounded-2xl border shadow-sm transition-shadow duration-200;
+    border-color: #dce8f7;
+  }
+  .cx-card:hover { box-shadow: 0 4px 24px rgba(26, 93, 201, 0.08); }
+
+  /* ── Buttons ── */
+  .cx-btn-primary {
+    @apply inline-flex items-center gap-2 px-4 py-2.5 rounded-xl text-sm font-semibold text-white transition-all duration-200 active:scale-95;
+    background: linear-gradient(135deg, #1a5dc9, #0e3578);
+    box-shadow: 0 4px 14px rgba(26, 93, 201, 0.35);
+  }
+  .cx-btn-primary:hover { box-shadow: 0 6px 20px rgba(26, 93, 201, 0.5); }
+
+  .cx-btn-secondary {
+    @apply inline-flex items-center gap-2 px-4 py-2.5 rounded-xl text-sm font-semibold transition-all duration-200 active:scale-95;
+    background: white;
+    color: #4b5563;
+    border: 1px solid #dce8f7;
+  }
+  .cx-btn-secondary:hover { background: #e8f0fb; color: #0e3578; border-color: #9dbcee; }
+
+  /* ── Input ── */
+  .cx-input {
+    @apply w-full px-3.5 py-2.5 text-sm rounded-xl transition-all outline-none;
+    border: 1.5px solid #dce8f7;
+    background: #f7faff;
+    color: #0d1b3e;
+  }
+  .cx-input:focus { border-color: #1a5dc9; box-shadow: 0 0 0 3px rgba(26, 93, 201, 0.1); }
+  .cx-input::placeholder { color: #9dbcee; }
+
+  /* ── Sidebar search ── */
+  .cx-search {
+    background: rgba(255,255,255,0.06);
+    border: 1px solid rgba(157, 188, 238, 0.15);
+    border-radius: 12px;
+    color: #c5d7f5;
+    font-size: 0.875rem;
+  }
+  .cx-search::placeholder { color: rgba(157, 188, 238, 0.4); }
+  .cx-search:focus { outline: none; border-color: rgba(26, 93, 201, 0.6); background: rgba(255,255,255,0.1); }
+
+  /* ── Status chips ── */
+  .cx-status-active   { @apply text-xs font-semibold px-2.5 py-1 rounded-full bg-emerald-50 text-emerald-700 border border-emerald-100; }
+  .cx-status-inactive { @apply text-xs font-semibold px-2.5 py-1 rounded-full bg-gray-100 text-gray-600 border border-gray-200; }
+  .cx-status-pending  { @apply text-xs font-semibold px-2.5 py-1 rounded-full bg-amber-50 text-amber-700 border border-amber-100; }
+  .cx-status-high     { @apply text-xs font-bold px-2.5 py-1 rounded-full bg-red-50 text-red-700 border border-red-100; }
+}
+
+/* ── ANIMATIONS ─────────────────────────────────────────────────────────── */
+@keyframes cx-fade-up {
+  from { opacity: 0; transform: translateY(14px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+@keyframes cx-pulse-glow {
+  0%, 100% { box-shadow: 0 0 12px rgba(26,93,201,0.3); }
+  50%       { box-shadow: 0 0 24px rgba(26,93,201,0.6); }
+}
+
+.cx-animate-in   { animation: cx-fade-up 0.35s ease both; }
+.cx-animate-in-2 { animation: cx-fade-up 0.35s 0.07s ease both; }
+.cx-animate-in-3 { animation: cx-fade-up 0.35s 0.14s ease both; }

@@ -1,0 +1,856 @@
+﻿1. dY"± Student Android App
+Student app mein offline, online aur hybrid tino students support honge.
+Account & Profile
+Login 
+Registration 
+Mobile OTP 
+Email login 
+Forgot password 
+Student profile 
+Profile photo 
+Parent details 
+Class 
+Board 
+Batch 
+Student ID 
+Student type: 
+Offline 
+Online 
+Hybrid 
+Dashboard
+Continue Learning 
+Today's Classes 
+Upcoming Tests 
+Pending Practice 
+Recent Results 
+Attendance 
+Weak Topics 
+Recommended Practice 
+Notifications 
+AI Doubt shortcut 
+dY>' Online Course Store
+Bahar ka koi bhi student course purchase kar sakega.
+Course Store
+All Courses 
+Class-wise courses 
+Board-wise courses 
+Chapter-wise courses 
+Revision courses 
+Test series 
+Special courses 
+Search 
+Filters 
+Course details 
+Demo lecture 
+Course curriculum 
+Price 
+Discount 
+Validity 
+Reviews 
+Purchase Flow
+Browse Course
+      â+"
+Course Details
+      â+"
+Buy Now
+      â+"
+Payment Gateway
+      â+"
+Payment Verification
+      â+"
+Order Created
+      â+"
+Course Automatically Unlocked
+Orders & Payments
+My Orders 
+Payment History 
+Invoice/Receipt 
+Coupon 
+Discount 
+Failed Payment 
+Refund Status 
+Purchased Courses 
+Course Expiry 
+2. dY"s My Courses / LMS
+Student ke purchased courses aur offline courses yahan honge.
+My Courses
+â",
+â"oâ"?â"? Class 12 Mathematics
+â",   â"oâ"?â"? Chapter 1
+â",   â",   â"oâ"?â"? Topic
+â",   â",   â"oâ"?â"? Subtopic
+â",   â",   â"oâ"?â"? Video
+â",   â",   â"oâ"?â"? PDF
+â",   â",   â""â"?â"? Practice
+â",   â",
+â",   â"oâ"?â"? Chapter 2
+â",   â""â"?â"? Chapter 3
+â",
+â""â"?â"? Test Series
+Learning Features
+Live Classes 
+Recorded Classes 
+Video lectures 
+Resume video 
+PDF/notes 
+Formula sheets 
+Question papers 
+Solutions 
+Practice sets 
+Chapter resources 
+3. dYr Mathematics Practice Engine
+Ye DK Mishra platform ka core feature hoga.
+Practice Types
+Topic-wise Practice 
+Subtopic Practice 
+Chapter Practice 
+Daily Practice 
+Custom Practice 
+Weak Topic Practice 
+Previous Mistake Practice 
+Recommended Practice 
+Personalized Practice 
+Difficulty
+Easy 
+Medium 
+Hard 
+Future mein AI dynamically difficulty adjust kar sakta hai.
+4. dY"? Test & Examination System
+Test Types
+Topic Test 
+Chapter Test 
+Full Mathematics Test 
+Mock Test 
+Revision Test 
+Course Test 
+Test Series 
+Custom Teacher Test 
+Test Features
+Timer 
+Question navigation 
+Mark for review 
+Skip 
+Auto-save 
+Auto-submit 
+Negative marking, if required 
+Automatic evaluation 
+Manual evaluation where needed 
+5. dY"S Result & Ranking System
+Test ke baad student ko:
+Marks 
+Percentage 
+Rank 
+Percentile 
+Accuracy 
+Correct answers 
+Wrong answers 
+Unattempted questions 
+Time taken 
+milenge.
+Detailed Analysis
+Algebra        82%
+Trigonometry   76%
+Calculus       48% dY"'
+Matrices       71%
+System identify karega:
+Weak Topic: Calculus
+6. dY" Mistake Book
+Student ke incorrect questions automatically save ho sakte hain.
+Mistake Categories
+Concept Error 
+Formula Error 
+Calculation Error 
+Sign Error 
+Silly Mistake 
+Time Management 
+Student:
+My Mistakes â+' Practice Again
+kar sakega.
+7. dYZ_ Weak Topic & Mastery System
+Har student ka Mathematics Mastery Map:
+Mathematics
+â",
+â"oâ"?â"? Algebra       82% dYY¢
+â"oâ"?â"? Trigonometry  76% dYY¢
+â"oâ"?â"? Calculus      48% dY"'
+â"oâ"?â"? Matrices      71% dYY¡
+â""â"?â"? Probability   64% dYY¡
+System weak areas ke according practice recommend karega.
+8. dY"^ Student Progress
+Student dekh sake:
+Course progress 
+Chapter progress 
+Topic mastery 
+Test improvement 
+Practice accuracy 
+Study time 
+Attendance 
+Completed lectures 
+Completed tests 
+Weak topics 
+Improvement timeline 
+9. dY  Formula Bank
+Searchable Mathematics formula library:
+Trigonometry 
+Algebra 
+Calculus 
+Matrices 
+Probability 
+Coordinate Geometry 
+etc. 
+Features:
+Search 
+Category 
+Favourite 
+Quick revision 
+10. dY- AI Mathematics Engine
+AI ko separate chatbot nahi, learning engine ki tarah integrate karenge.
+AI ENGINE
+â",
+â"oâ"?â"? Maths Question Solver
+â"oâ"?â"? Photo Question Solver
+â"oâ"?â"? Step-by-Step Solution
+â"oâ"?â"? Hint Generator
+â"oâ"?â"? Concept Explanation
+â"oâ"?â"? Similar Question Generator
+â"oâ"?â"? AI Question Generator
+â"oâ"?â"? Mistake Analyzer
+â"oâ"?â"? Weak Topic Detector
+â"oâ"?â"? Personalized Practice
+â""â"?â"? Study Planner
+11. dY", AI Photo Doubt Solver
+Student question ki photo upload kare:
+Question Photo
+      â+"
+Image Processing
+      â+"
+Math Problem Recognition
+      â+"
+AI Solver
+      â+"
+Step-by-Step Solution
+      â+"
+Concept
+      â+"
+Common Mistake
+      â+"
+Similar Questions
+Student ko sirf final answer nahi, solution process milega.
+12. dY`"â??dY?« Ask Teacher / Doubt Escalation
+Agar AI se doubt solve nahi hua:
+AI Doubt
+   â+"
+Still Confused?
+   â+"
+Ask Teacher
+   â+"
+Teacher receives doubt
+   â+"
+Teacher replies
+Teacher AI ke answer ko bhi review kar sakta hai.
+13. dY"" Notification System
+Notifications:
+New Course 
+New Lecture 
+Upcoming Class 
+Test Reminder 
+Result Published 
+New Material 
+Practice Reminder 
+Course Expiry 
+Payment Confirmation 
+Important Announcement 
+Teacher Message 
+Push notifications ke liye Firebase Cloud Messaging use kiya ja sakta hai.
+dY'» Admin Management System
+Admin ke paas complete coaching control hoga.
+ADMIN DASHBOARD
+â",
+â"oâ"?â"? Dashboard
+â"oâ"?â"? Students
+â"oâ"?â"? Parents
+â"oâ"?â"? Teachers
+â"oâ"?â"? Batches
+â"oâ"?â"? Courses
+â"oâ"?â"? Online Course Store
+â"oâ"?â"? Course Purchases
+â"oâ"?â"? Orders
+â"oâ"?â"? Coupons
+â"oâ"?â"? Classes
+â"oâ"?â"? Attendance
+â"oâ"?â"? Biometric
+â"oâ"?â"? Question Bank
+â"oâ"?â"? Practice Sets
+â"oâ"?â"? Tests
+â"oâ"?â"? Results
+â"oâ"?â"? Rankings
+â"oâ"?â"? Study Material
+â"oâ"?â"? Videos
+â"oâ"?â"? Fees
+â"oâ"?â"? Payments
+â"oâ"?â"? Notifications
+â"oâ"?â"? Doubts
+â"oâ"?â"? AI Management
+â"oâ"?â"? Analytics
+â"oâ"?â"? Reports
+â""â"?â"? Settings
+dY>' Admin Course Store Management
+Admin course create kar sake:
+Create Course
+     â+"
+Course Information
+     â+"
+Class / Board
+     â+"
+Chapters
+     â+"
+Topics
+     â+"
+Videos
+     â+"
+PDFs
+     â+"
+Practice
+     â+"
+Tests
+     â+"
+Price
+     â+"
+Validity
+     â+"
+Publish
+Admin manage karega:
+Course price 
+Discount 
+Coupon 
+Course validity 
+Demo lecture 
+Course visibility 
+Published/unpublished 
+Student enrollments 
+Purchases 
+Revenue 
+Refunds 
+16. dY`"â??dY?« Teacher Panel
+TEACHER DASHBOARD
+â",
+â"oâ"?â"? My Batches
+â"oâ"?â"? Students
+â"oâ"?â"? Attendance
+â"oâ"?â"? Chapters
+â"oâ"?â"? Topics
+â"oâ"?â"? Questions
+â"oâ"?â"? Practice Sets
+â"oâ"?â"? Tests
+â"oâ"?â"? Results
+â"oâ"?â"? Solutions
+â"oâ"?â"? Doubts
+â"oâ"?â"? Weak Students
+â"oâ"?â"? Student Progress
+â""â"?â"? Analytics
+Teacher dekh sakega:
+Kaunsa student kis topic mein weak hai?
+Example:
+Rahul
+Algebra        82%
+Trigonometry   76%
+Calculus       48% dY"'
+Matrices       71%
+Teacher:
+Calculus â+' Targeted Practice â+' Assign to Rahul
+kar sakega.
+17. dY`"â??dY`câ??dY`▌ Parent Portal
+Initially separate app ki zarurat nahi.
+Web portal ya Student App ke controlled Parent Mode se access diya ja sakta hai.
+Parent à▌à¥╪à- à,àà¥╪:
+Attendance 
+Test marks 
+Rank 
+Percentile 
+Performance 
+Weak Topics 
+Improvement 
+Fees 
+Upcoming Tests 
+Teacher Remarks 
+Notifications 
+18. dY?« Offline Coaching Management
+Local students ke liye:
+Admission 
+Student ID 
+Batch 
+Timetable 
+Attendance 
+Biometric 
+Fees 
+Tests 
+Results 
+Parent information 
+Notifications 
+19. dYO? Online Student Management
+Bahar ka student:
+Website/App
+    â+"
+Register
+    â+"
+Browse Courses
+    â+"
+Purchase
+    â+"
+Payment
+    â+"
+Automatic Enrollment
+    â+"
+Course Access
+Uske liye physical batch ki requirement nahi hogi.
+20. dY", Hybrid Student
+Ye bhi important hai.
+Example:
+Motihari ka student offline coaching karta hai + online revision course purchase karta hai.
+Uska account:
+Student
+â",
+â"oâ"?â"? Offline Batch
+â"oâ"?â"? Attendance
+â"oâ"?â"? Offline Tests
+â",
+â""â"?â"? Online Courses
+    â"oâ"?â"? Recorded Classes
+    â"oâ"?â"? Practice
+    â""â"?â"? Test Series
+21. dY¬ Biometric Attendance Integration
+Biometric Machine
+       â+"
+Device Software/API
+       â+"
+Attendance Service
+       â+"
+DK Mishra Backend
+       â+"
+PostgreSQL
+       â+"
+Student / Parent / Admin
+Machine purchase karne se pehle brand, model aur API/SDK verify karna hoga.
+22. dY'° Fees & Payment System
+Offline
+Admission fees 
+Monthly fees 
+Installments 
+Pending fees 
+Payment history 
+Online
+Course purchase 
+Test series 
+Orders 
+Coupons 
+Discounts 
+Refunds 
+Course validity 
+Payment Flow
+Payment Gateway
+      â+"
+Webhook
+      â+"
+Backend Verification
+      â+"
+Payment Confirmed
+      â+"
+Enrollment
+      â+"
+Course Unlock
+23. dYO? Public Website
+Main pages
+Home 
+About DK Mishra 
+Courses 
+Course Details 
+Test Series 
+Results 
+Faculty 
+Testimonials 
+Blog/Updates 
+Contact 
+Login 
+Register 
+Most important:
+Online Course Store
+jahan India ke kisi bhi city ka student course purchase kar sake.
+24. dY-¥ï,? Student Web Portal
+Android app ke saath web access bhi:
+student.domain.com
+Features:
+Dashboard 
+Courses 
+Classes 
+Videos 
+Practice 
+Tests 
+Results 
+AI Doubt 
+Progress 
+Profile 
+25. âsTï,? Backend
+Recommended:
+Node.js
+Express.js
+TypeScript
+REST API
+PostgreSQL
+Prisma
+JWT
+Refresh Tokens
+Architecture:
+Student App
+     â",
+Teacher Panel
+     â",
+Admin Panel
+     â",
+Website
+     â",
+     â-¼
+ API Gateway / Backend
+     â",
+ â"oâ"?â"? Authentication
+ â"oâ"?â"? Student Service
+ â"oâ"?â"? Course Service
+ â"oâ"?â"? Payment Service
+ â"oâ"?â"? Test Service
+ â"oâ"?â"? Attendance Service
+ â"oâ"?â"? Notification Service
+ â"oâ"?â"? AI Service
+ â""â"?â"? Analytics Service
+     â",
+ â"Oâ"?â"?â"?â"¼â"?â"?â"?â"?â"?â"?â"?â"?â"?â"?â"?
+ â-¼   â-¼          â-¼
+DB  Storage     AI
+26. dY-,ï,? Database
+PostgreSQL + Prisma
+Initial major tables:
+users
+students
+parents
+teachers
+admins
+batches
+courses
+course_chapters
+topics
+subtopics
+course_enrollments
+course_progress
+questions
+question_options
+question_solutions
+practice_sets
+practice_questions
+practice_attempts
+tests
+test_questions
+test_attempts
+test_results
+attendance
+biometric_logs
+fees
+payments
+orders
+order_items
+coupons
+study_materials
+videos
+student_progress
+topic_mastery
+mistakes
+doubts
+ai_solutions
+notifications
+Additional tables requirements ke according add hongi.
+27. â~?ï,? Video & File Storage
+Database mein actual videos nahi rakhenge.
+PostgreSQL
+    â",
+    â""â"?â"? Metadata / Video ID / URL
+Actual Video
+    â+"
+Object Storage
+    â+"
+CDN / Video Delivery
+Files:
+Videos 
+PDFs 
+Images 
+Question images 
+Certificates 
+Documents 
+cloud/object storage mein rahenge.
+28. dY"? Authentication & Security
+JWT 
+Refresh Token 
+Role Based Access Control 
+Admin permissions 
+Teacher permissions 
+Parent permissions 
+Student permissions 
+Secure password hashing 
+API rate limiting 
+Input validation 
+Payment webhook verification 
+Database backups 
+Audit logs 
+29. dY"" Notification Service
+Backend
+   â",
+   â-¼
+Firebase Cloud Messaging
+   â",
+   â"oâ"?â"? Android Student
+   â"oâ"?â"? Teacher
+   â""â"?â"? Parent
+30. dY`` Super Admin
+Initially optional.
+Future mein:
+SUPER ADMIN
+â",
+â"oâ"?â"? Motihari Branch
+â"oâ"?â"? Branch 2
+â"oâ"?â"? Branch 3
+â"oâ"?â"? All Students
+â"oâ"?â"? All Teachers
+â"oâ"?â"? Revenue
+â""â"?â"? Global Analytics
+31. dY"S Advanced Analytics
+Student
+Accuracy 
+Speed 
+Weak topics 
+Strong topics 
+Improvement 
+Test history 
+Practice history 
+Batch
+Average marks 
+Attendance 
+Weak chapters 
+Test performance 
+Teacher
+Batch performance 
+Student improvement 
+Test performance 
+Institute
+Total students 
+Active students 
+Online students 
+Offline students 
+Course sales 
+Revenue 
+Attendance 
+Test activity 
+32. dY- AI Analytics
+AI student performance analyse karke:
+â?oRahul ne last 4 tests mein Calculus mein 52%, 48%, 55%, 49% score kiya. Targeted revision aur 20 practice questions recommend kiye gaye hain.â??
+Is tarah AI actionable recommendation dega.
+33. dY"± Actual Applications / Services
+Final system mein:
+Component
+Technology/Type
+Student Android App
+React Native
+Admin Panel
+React + TypeScript
+Teacher Panel
+React + TypeScript
+Parent Portal
+React Web
+Public Website
+React + Vite
+Student Web Portal
+React
+Backend
+Node.js + Express + TypeScript
+Database
+PostgreSQL
+ORM
+Prisma
+Authentication
+JWT + Refresh Token
+Storage
+S3-compatible Object Storage
+Push Notification
+Firebase FCM
+AI
+LLM + Vision APIs
+Payment
+Payment Gateway
+Biometric
+Device API/SDK
+Deployment
+Vercel + Railway/AWS
+Source Control
+GitHub
+34. dY?-ï,? Final Architecture
+                         DK MISHRA MATHOS
+                                â",
+             â"Oâ"?â"?â"?â"?â"?â"?â"?â"?â"?â"?â"?â"?â"?â"?â"?â"?â"?â"?â"¼â"?â"?â"?â"?â"?â"?â"?â"?â"?â"?â"?â"?â"?â"?â"?â"?â"?â"?â"?
+             â",                  â",                  â",
+             â-¼                  â-¼                  â-¼
+       STUDENT APP         TEACHER PANEL       ADMIN PANEL
+       React Native           React              React
+             â",                  â",                  â",
+             â""â"?â"?â"?â"?â"?â"?â"?â"?â"?â"?â"?â"?â"?â"?â"?â"?â"?â"?â"¼â"?â"?â"?â"?â"?â"?â"?â"?â"?â"?â"?â"?â"?â"?â"?â"?â"?â"?â"~
+                                â",
+             â"Oâ"?â"?â"?â"?â"?â"?â"?â"?â"?â"?â"?â"?â"?â"?â"?â"?â"?â"?â"¼â"?â"?â"?â"?â"?â"?â"?â"?â"?â"?â"?â"?â"?â"?â"?â"?â"?â"?â"?
+             â",                  â",                  â",
+             â-¼                  â-¼                  â-¼
+       PUBLIC WEBSITE     STUDENT WEB        PARENT PORTAL
+             â",                  â",                  â",
+             â""â"?â"?â"?â"?â"?â"?â"?â"?â"?â"?â"?â"?â"?â"?â"?â"?â"?â"?â"¼â"?â"?â"?â"?â"?â"?â"?â"?â"?â"?â"?â"?â"?â"?â"?â"?â"?â"?â"~
+                                â-¼
+                         BACKEND API
+                      Node + Express + TS
+                                â",
+       â"Oâ"?â"?â"?â"?â"?â"?â"?â"?â"?â"?â"?â"?â"¬â"?â"?â"?â"?â"?â"?â"?â"?â"?â"?â"?â"¼â"?â"?â"?â"?â"?â"?â"?â"?â"?â"?â"?â"¬â"?â"?â"?â"?â"?â"?â"?â"?â"?â"?â"?â"?â"?
+       â-¼            â-¼           â-¼           â-¼            â-¼
+ PostgreSQL      Storage       AI       Payments    Biometric
+       â",            â",           â",           â",            â",
+       â""â"?â"?â"?â"?â"?â"?â"?â"?â"?â"?â"?â"?â"'â"?â"?â"?â"?â"?â"?â"?â"?â"?â"?â"?â"'â"?â"?â"?â"?â"?â"?â"?â"?â"?â"?â"?â"'â"?â"?â"?â"?â"?â"?â"?â"?â"?â"?â"?â"?â"~
+                                â",
+                                â-¼
+                         Analytics Engine
+35. dYs? Development Phases
+Phase 1 â?" Foundation
+Authentication
+Users
+Roles
+Students
+Teachers
+Parents
+Batches
+Courses
+Chapters
+Topics
+Phase 2 â?" LMS + Mathematics
+Videos
+Study Material
+Question Bank
+Practice
+Tests
+Results
+Solutions
+Rank
+Phase 3 â?" Online Course Selling
+Course Store
+Course Details
+Orders
+Payment
+Coupons
+Enrollment
+Course Validity
+Invoices
+Phase 4 â?" Coaching ERP
+Attendance
+Biometric
+Fees
+Notifications
+Parent Portal
+Reports
+Phase 5 â?" Intelligence
+Weak Topics
+Mistake Book
+Mastery
+Analytics
+Personalized Practice
+Phase 6 â?" AI
+AI Doubt
+Photo Solver
+Step-by-Step Solution
+Similar Questions
+AI Question Generator
+AI Analysis
+Study Planner
+Phase 7 â?" Production
+React Native App
+Play Store
+Production Server
+Database Backup
+Security
+Monitoring
+Crash Reporting
+Performance Optimization
+dY"¥ Final Product
+Ab final scope ko ek line mein define karein to:
+DK Mishra Mathematics ka ek complete digital ecosystem jisme offline coaching management, online course selling, Mathematics LMS, tests & assessment, biometric attendance, parent monitoring, AI doubt solving, personalized learning, analytics aur Android application sab ek single platform se manage honge.
+Aur sabse important change ye hai ki ab system sirf Motihari ke students ke liye nahi hoga:
+             DK MISHRA MATHEMATICS
+                       â",
+          â"Oâ"?â"?â"?â"?â"?â"?â"?â"?â"?â"?â"?â"?â"¼â"?â"?â"?â"?â"?â"?â"?â"?â"?â"?â"?â"?â"?
+          â-¼            â-¼            â-¼
+       OFFLINE       ONLINE       HYBRID
+       STUDENT      STUDENT       STUDENT
+          â",            â",            â",
+          â""â"?â"?â"?â"?â"?â"?â"?â"?â"?â"?â"?â"?â"¼â"?â"?â"?â"?â"?â"?â"?â"?â"?â"?â"?â"?â"~
+                       â-¼
+                  SAME ACCOUNT
+                       â",
+          â"Oâ"?â"?â"?â"?â"?â"?â"?â"?â"?â"?â"?â"?â"¼â"?â"?â"?â"?â"?â"?â"?â"?â"?â"?â"?â"?â"?
+          â-¼            â-¼            â-¼
+       Courses       Tests         AI
+       Classes       Practice      Doubts
+       Attendance    Results       Analytics
+dY`` SUPER ADMIN
+                         â",
+          â"Oâ"?â"?â"?â"?â"?â"?â"?â"?â"?â"?â"?â"?â"?â"?â"¼â"?â"?â"?â"?â"?â"?â"?â"?â"?â"?â"?â"?â"?â"?â"?
+          â-¼              â-¼              â-¼
+     Coaching A      Coaching B      Coaching C
+     Motihari        Motihari        Motihari
+          â",              â",              â",
+     â"Oâ"?â"?â"?â"?â"¼â"?â"?â"?â"?â"?    â"Oâ"?â"?â"?â"?â"¼â"?â"?â"?â"?â"?    â"Oâ"?â"?â"?â"?â"¼â"?â"?â"?â"?â"?
+     â-¼    â-¼    â-¼    â-¼    â-¼    â-¼    â-¼    â-¼    â-¼
+  Admin Teacher Student Admin Teacher Student ...
+dY`` Aapke Super Admin Panel mein
+All Coaching Management 
+New Coaching Add / Approve 
+Coaching Profile & Branding 
+Admin Account Management 
+Teacher Management 
+Student Management 
+Parent Management 
+Courses Management 
+Subjects Management 
+Classes & Batches 
+Attendance 
+Tests & Exams 
+Questions / Question Bank 
+Results & Rankings 
+Study Material 
+Live / Recorded Classes 
+Fees & Payments 
+Subscription / Plan Management 
+Coaching-wise Reports 
+Student Analytics 
+Teacher Analytics 
+Notifications 
+Complaints / Support 
+System Settings 
+Subscription Expiry 
+Trial Management 
+Platform-wide Dashboard 
+dY?« Har Coaching ka apna Admin
+Super Admin
+     â",
+     â"oâ"?â"? Physics Coaching
+     â",      â"oâ"?â"? Admin
+     â",      â"oâ"?â"? Teachers
+     â",      â"oâ"?â"? Students
+     â",      â""â"?â"? Parents
+     â",
+     â"oâ"?â"? Chemistry Coaching
+     â",      â"oâ"?â"? Admin
+     â",      â"oâ"?â"? Teachers
+     â",      â"oâ"?â"? Students
+     â",      â""â"?â"? Parents
+     â",
+     â""â"?â"? Biology Coaching
+            â"oâ"?â"? Admin
+            â"oâ"?â"? Teachers
+            â"oâ"?â"? Students
+            â""â"?â"? Parents

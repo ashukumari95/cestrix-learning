@@ -1,0 +1,1203 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// =============================================================
+// ENUMS
+// =============================================================
+
+enum RoleEnum {
+  SUPER_ADMIN
+  COACHING_ADMIN
+  BRANCH_MANAGER
+  TEACHER
+  STUDENT
+  PARENT
+  STAFF
+}
+
+enum OrgStatus {
+  ACTIVE
+  TRIAL
+  SUSPENDED
+}
+
+enum StudentType {
+  OFFLINE
+  ONLINE
+  HYBRID
+}
+
+enum ResourceType {
+  VIDEO
+  PDF
+  IMAGE
+  DOCUMENT
+}
+
+enum QuestionType {
+  OBJECTIVE
+  SUBJECTIVE
+  NUMERICAL
+  VVI
+  PYQ
+  BOARD_PATTERN
+  JEE
+}
+
+enum DifficultyLevel {
+  EASY
+  MEDIUM
+  HARD
+  VERY_HARD
+  CHALLENGE
+}
+
+enum AttendanceType {
+  MANUAL
+  BIOMETRIC
+  RFID
+}
+
+enum AttendanceStatus {
+  PRESENT
+  ABSENT
+  LATE
+  HALF_DAY
+  LEAVE
+}
+
+enum PaymentStatus {
+  PENDING
+  SUCCESS
+  FAILED
+  REFUNDED
+}
+
+enum OrderStatus {
+  PENDING
+  COMPLETED
+  CANCELLED
+}
+
+// =============================================================
+// 1. TENANT & ORGANIZATION MODELS
+// =============================================================
+
+model SubscriptionPlan {
+  id          String   @id @default(uuid())
+  name        String
+  price       Decimal  @default(0.0)
+  maxStudents Int
+  maxBranches Int
+  features    Json
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  organizations OrganizationSubscription[]
+}
+
+model OrganizationSubscription {
+  id             String                @id @default(uuid())
+  organizationId String                @unique
+  planId         String
+  organization   Organization          @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  plan           SubscriptionPlan      @relation(fields: [planId], references: [id])
+  startDate      DateTime              @default(now())
+  endDate        DateTime?
+  status         String                @default("ACTIVE")
+  invoices       SubscriptionInvoice[]
+  usages         SubscriptionUsage[]
+}
+
+model SubscriptionInvoice {
+  id             String                   @id @default(uuid())
+  subscriptionId String
+  subscription   OrganizationSubscription @relation(fields: [subscriptionId], references: [id])
+  amount         Decimal
+  status         PaymentStatus
+  createdAt      DateTime                 @default(now())
+}
+
+model SubscriptionUsage {
+  id             String                   @id @default(uuid())
+  subscriptionId String
+  subscription   OrganizationSubscription @relation(fields: [subscriptionId], references: [id])
+  metric         String
+  value          Int
+  recordedAt     DateTime                 @default(now())
+}
+
+model Organization {
+  id           String    @id @default(uuid())
+  name         String
+  logoUrl      String?
+  domain       String?   @unique
+  contactEmail String
+  contactPhone String
+  status       OrgStatus @default(TRIAL)
+
+  subscription  OrganizationSubscription?
+  settings      OrganizationSettings?
+  branches      Branch[]
+  users         User[]
+  academicYears AcademicYear[]
+  courses       Course[]
+  tests         Test[]
+  questions     Question[]
+  roles         Role[]
+  apps          App[]
+  feeStructures FeeStructure[]
+
+  aiUsageTokens Int          @default(0)
+  createdAt     DateTime     @default(now())
+  updatedAt     DateTime     @updatedAt
+  AIUsageLog    AIUsageLog[]
+}
+
+model OrganizationSettings {
+  id             String       @id @default(uuid())
+  organizationId String       @unique
+  organization   Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  branding       Json?
+  features       Json?
+  createdAt      DateTime     @default(now())
+  updatedAt      DateTime     @updatedAt
+}
+
+model Branch {
+  id             String       @id @default(uuid())
+  organizationId String
+  organization   Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  name           String
+  branchCode     String?
+  address        String?
+  city           String?
+  state          String?
+  contactPhone   String?
+
+  users   User[]
+  batches Batch[]
+  devices AttendanceDevice[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+// =============================================================
+// 2. AUTHENTICATION & SECURITY
+// =============================================================
+
+model Role {
+  id             String           @id @default(uuid())
+  organizationId String?
+  organization   Organization?    @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  name           String
+  isSystem       Boolean          @default(false)
+  users          User[]
+  permissions    RolePermission[]
+}
+
+model Permission {
+  id       String           @id @default(uuid())
+  resource String
+  action   String
+  roles    RolePermission[]
+}
+
+model RolePermission {
+  roleId       String
+  permissionId String
+  role         Role       @relation(fields: [roleId], references: [id], onDelete: Cascade)
+  permission   Permission @relation(fields: [permissionId], references: [id], onDelete: Cascade)
+
+  @@id([roleId, permissionId])
+}
+
+model User {
+  id             String        @id @default(uuid())
+  organizationId String?
+  organization   Organization? @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  branchId       String?
+  branch         Branch?       @relation(fields: [branchId], references: [id])
+  roleId         String?
+  dbRole         Role?         @relation(fields: [roleId], references: [id])
+
+  name         String
+  email        String?  @unique
+  phone        String?  @unique
+  passwordHash String
+  roleEnum     RoleEnum
+  isActive     Boolean  @default(true)
+
+  sessions      Session[]
+  auditLogs     AuditLog[]
+  otps          OTPVerification[]
+  conversations Conversation[]    @relation("UserConversations")
+  messages      Message[]         @relation("UserMessages")
+  orders        Order[]
+
+  studentProfile StudentProfile?
+  teacherProfile TeacherProfile?
+  parentProfile  ParentProfile?
+
+  sentNotifications     Notification[] @relation("Sender")
+  receivedNotifications Notification[] @relation("Receiver")
+  payments              Payment[]
+
+  createdAt  DateTime     @default(now())
+  updatedAt  DateTime     @updatedAt
+  AIUsageLog AIUsageLog[]
+
+  @@index([organizationId, branchId])
+}
+
+model Session {
+  id        String   @id @default(uuid())
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  token     String   @unique
+  ipAddress String?
+  userAgent String?
+  expiresAt DateTime
+  createdAt DateTime @default(now())
+}
+
+model OTPVerification {
+  id        String   @id @default(uuid())
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  code      String
+  expiresAt DateTime
+  used      Boolean  @default(false)
+  createdAt DateTime @default(now())
+}
+
+model AuditLog {
+  id        String   @id @default(uuid())
+  userId    String?
+  user      User?    @relation(fields: [userId], references: [id], onDelete: SetNull)
+  action    String
+  resource  String
+  details   Json?
+  ipAddress String?
+  createdAt DateTime @default(now())
+}
+
+// =============================================================
+// 3. STUDENT & USER PROFILES
+// =============================================================
+
+model StudentProfile {
+  id     String @id @default(uuid())
+  userId String @unique
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  studentType  StudentType @default(ONLINE)
+  enrollmentNo String?
+  rollNo       String?
+
+  classId    String?
+  classLevel ClassLevel? @relation(fields: [classId], references: [id])
+
+  address   StudentAddress?
+  documents StudentDocument[]
+  history   StudentAcademicHistory[]
+  guardians StudentGuardian[]
+
+  batches          StudentBatch[]
+  attendances      Attendance[]
+  attendanceLogs   AttendanceLog[]
+  enrollments      CourseEnrollment[]
+  testAttempts     TestAttempt[]
+  practiceAttempts PracticeAttempt[]
+  topicMasteries   TopicMastery[]
+  mistakes         MistakeLog[]
+  studentFees      StudentFee[]
+  courseProgress   CourseProgress[]
+  doubts           Doubt[]
+}
+
+model StudentAddress {
+  id               String         @id @default(uuid())
+  studentProfileId String         @unique
+  studentProfile   StudentProfile @relation(fields: [studentProfileId], references: [id], onDelete: Cascade)
+  street           String?
+  city             String?
+  state            String?
+  pincode          String?
+}
+
+model StudentDocument {
+  id               String         @id @default(uuid())
+  studentProfileId String
+  studentProfile   StudentProfile @relation(fields: [studentProfileId], references: [id], onDelete: Cascade)
+  docType          String
+  fileUrl          String
+  verified         Boolean        @default(false)
+}
+
+model StudentAcademicHistory {
+  id               String         @id @default(uuid())
+  studentProfileId String
+  studentProfile   StudentProfile @relation(fields: [studentProfileId], references: [id], onDelete: Cascade)
+  previousSchool   String?
+  lastClass        String?
+  percentage       Decimal?
+  passingYear      Int?
+}
+
+model ParentProfile {
+  id         String  @id @default(uuid())
+  userId     String  @unique
+  user       User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+  occupation String?
+}
+
+model StudentGuardian {
+  id               String         @id @default(uuid())
+  studentProfileId String
+  studentProfile   StudentProfile @relation(fields: [studentProfileId], references: [id], onDelete: Cascade)
+  name             String
+  relation         String
+  phone            String?
+  email            String?
+  isPrimary        Boolean        @default(true)
+}
+
+model TeacherProfile {
+  id               String            @id @default(uuid())
+  userId           String            @unique
+  user             User              @relation(fields: [userId], references: [id], onDelete: Cascade)
+  employeeId       String?
+  qualification    String?
+  bio              String?
+  specialization   String?
+  batches          TeacherBatch[]
+  sessions         ClassSession[]
+  doubtAssignments DoubtAssignment[]
+}
+
+// =============================================================
+// 4. ACADEMIC STRUCTURE 
+// =============================================================
+
+model AcademicYear {
+  id             String       @id @default(uuid())
+  organizationId String
+  organization   Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  name           String
+  startDate      DateTime
+  endDate        DateTime
+  isActive       Boolean      @default(true)
+  batches        Batch[]
+}
+
+model Board {
+  id          String       @id @default(uuid())
+  name        String
+  description String?
+  classes     ClassLevel[]
+}
+
+model ClassLevel {
+  id       String           @id @default(uuid())
+  boardId  String
+  board    Board            @relation(fields: [boardId], references: [id], onDelete: Cascade)
+  name     String
+  subjects Subject[]
+  students StudentProfile[]
+  batches  Batch[]
+}
+
+model Subject {
+  id       String     @id @default(uuid())
+  classId  String
+  class    ClassLevel @relation(fields: [classId], references: [id], onDelete: Cascade)
+  name     String
+  code     String?
+  chapters Chapter[]
+}
+
+model Chapter {
+  id        String  @id @default(uuid())
+  subjectId String
+  subject   Subject @relation(fields: [subjectId], references: [id], onDelete: Cascade)
+  name      String
+  order     Int     @default(0)
+  topics    Topic[]
+}
+
+model Topic {
+  id        String         @id @default(uuid())
+  chapterId String
+  chapter   Chapter        @relation(fields: [chapterId], references: [id], onDelete: Cascade)
+  name      String
+  order     Int            @default(0)
+  subtopics Subtopic[]
+  questions Question[]
+  masteries TopicMastery[]
+}
+
+model Subtopic {
+  id       String     @id @default(uuid())
+  topicId  String
+  topic    Topic      @relation(fields: [topicId], references: [id], onDelete: Cascade)
+  name     String
+  order    Int        @default(0)
+  concepts Concept[]
+  Question Question[]
+}
+
+model Concept {
+  id         String     @id @default(uuid())
+  subtopicId String
+  subtopic   Subtopic   @relation(fields: [subtopicId], references: [id], onDelete: Cascade)
+  name       String
+  order      Int        @default(0)
+  resources  Resource[]
+  Question   Question[]
+}
+
+// =============================================================
+// 5. BATCH & CLASS MANAGEMENT
+// =============================================================
+
+model Batch {
+  id             String       @id @default(uuid())
+  branchId       String
+  branch         Branch       @relation(fields: [branchId], references: [id], onDelete: Cascade)
+  academicYearId String
+  academicYear   AcademicYear @relation(fields: [academicYearId], references: [id])
+  classId        String
+  classLevel     ClassLevel   @relation(fields: [classId], references: [id])
+
+  name     String
+  capacity Int    @default(50)
+
+  students  StudentBatch[]
+  teachers  TeacherBatch[]
+  schedules BatchSchedule[]
+  sessions  ClassSession[]
+  timetable Timetable[]
+  tests     BatchTest[]
+
+  createdAt DateTime @default(now())
+}
+
+model StudentBatch {
+  studentId String
+  batchId   String
+  student   StudentProfile @relation(fields: [studentId], references: [id], onDelete: Cascade)
+  batch     Batch          @relation(fields: [batchId], references: [id], onDelete: Cascade)
+
+  @@id([studentId, batchId])
+}
+
+model TeacherBatch {
+  teacherId String
+  batchId   String
+  teacher   TeacherProfile @relation(fields: [teacherId], references: [id], onDelete: Cascade)
+  batch     Batch          @relation(fields: [batchId], references: [id], onDelete: Cascade)
+
+  @@id([teacherId, batchId])
+}
+
+model BatchSchedule {
+  id        String  @id @default(uuid())
+  batchId   String
+  batch     Batch   @relation(fields: [batchId], references: [id], onDelete: Cascade)
+  dayOfWeek Int
+  startTime String
+  endTime   String
+  subject   String?
+}
+
+model Timetable {
+  id       String @id @default(uuid())
+  batchId  String
+  batch    Batch  @relation(fields: [batchId], references: [id], onDelete: Cascade)
+  schedule Json
+}
+
+model ClassSession {
+  id        String          @id @default(uuid())
+  batchId   String
+  batch     Batch           @relation(fields: [batchId], references: [id], onDelete: Cascade)
+  teacherId String?
+  teacher   TeacherProfile? @relation(fields: [teacherId], references: [id])
+
+  topic     String
+  date      DateTime
+  startTime DateTime
+  endTime   DateTime
+
+  attendances Attendance[]
+}
+
+// =============================================================
+// 6. ATTENDANCE 
+// =============================================================
+
+model AttendanceDevice {
+  id           String          @id @default(uuid())
+  branchId     String
+  branch       Branch          @relation(fields: [branchId], references: [id], onDelete: Cascade)
+  deviceName   String
+  ipAddress    String?
+  serialNumber String          @unique
+  status       String          @default("ACTIVE")
+  logs         AttendanceLog[]
+}
+
+model AttendanceLog {
+  id        String            @id @default(uuid())
+  studentId String
+  student   StudentProfile    @relation(fields: [studentId], references: [id], onDelete: Cascade)
+  deviceId  String?
+  device    AttendanceDevice? @relation(fields: [deviceId], references: [id])
+  punchTime DateTime
+  punchType String
+  createdAt DateTime          @default(now())
+}
+
+model Attendance {
+  id          String                 @id @default(uuid())
+  studentId   String
+  student     StudentProfile         @relation(fields: [studentId], references: [id], onDelete: Cascade)
+  sessionId   String?
+  session     ClassSession?          @relation(fields: [sessionId], references: [id])
+  date        DateTime               @default(now())
+  status      AttendanceStatus
+  type        AttendanceType         @default(MANUAL)
+  inTime      DateTime?
+  outTime     DateTime?
+  remarks     String?
+  corrections AttendanceCorrection[]
+
+  @@unique([studentId, date, sessionId])
+}
+
+model AttendanceCorrection {
+  id           String     @id @default(uuid())
+  attendanceId String
+  attendance   Attendance @relation(fields: [attendanceId], references: [id], onDelete: Cascade)
+  oldStatus    String
+  newStatus    String
+  reason       String
+  createdAt    DateTime   @default(now())
+}
+
+// =============================================================
+// 7. QUESTION BANK
+// =============================================================
+
+model QuestionCategory {
+  id        String     @id @default(uuid())
+  name      String
+  questions Question[]
+}
+
+model QuestionTag {
+  id        String     @id @default(uuid())
+  name      String
+  questions Question[] @relation("QuestionTags")
+}
+
+model Question {
+  id             String            @id @default(uuid())
+  organizationId String
+  organization   Organization      @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  topicId        String?
+  topic          Topic?            @relation(fields: [topicId], references: [id])
+  subtopicId     String?
+  subtopic       Subtopic?         @relation(fields: [subtopicId], references: [id])
+  conceptId      String?
+  concept        Concept?          @relation(fields: [conceptId], references: [id])
+  categoryId     String?
+  category       QuestionCategory? @relation(fields: [categoryId], references: [id])
+
+  text          String          @db.Text
+  questionType  QuestionType    @default(OBJECTIVE)
+  difficulty    DifficultyLevel @default(MEDIUM)
+  marks         Decimal         @default(1.0)
+  negativeMarks Decimal         @default(0.0)
+  expectedTime  Int? // Expected time in seconds
+
+  options            QuestionOption[]
+  solution           String?              @db.Text
+  stepByStepSolution String?              @db.Text
+  hint               String?              @db.Text
+  conceptUsed        String?              @db.Text
+  commonMistake      String?              @db.Text
+  attachments        QuestionAttachment[]
+  tags               QuestionTag[]        @relation("QuestionTags")
+
+  testQuestions     TestQuestion[]
+  mistakes          MistakeLog[]
+  practiceQuestions PracticeQuestion[]
+  testAnswers       TestAnswer[]
+  createdAt         DateTime           @default(now())
+}
+
+model QuestionOption {
+  id         String   @id @default(uuid())
+  questionId String
+  question   Question @relation(fields: [questionId], references: [id], onDelete: Cascade)
+  text       String   @db.Text
+  isCorrect  Boolean  @default(false)
+}
+
+model QuestionAttachment {
+  id         String   @id @default(uuid())
+  questionId String
+  question   Question @relation(fields: [questionId], references: [id], onDelete: Cascade)
+  url        String
+  type       String
+}
+
+// =============================================================
+// 8. PRACTICE ENGINE
+// =============================================================
+
+model PracticeSet {
+  id          String             @id @default(uuid())
+  title       String
+  description String?
+  questions   PracticeQuestion[]
+  attempts    PracticeAttempt[]
+}
+
+model PracticeQuestion {
+  id            String      @id @default(uuid())
+  practiceSetId String
+  practiceSet   PracticeSet @relation(fields: [practiceSetId], references: [id], onDelete: Cascade)
+  questionId    String
+  question      Question    @relation(fields: [questionId], references: [id], onDelete: Cascade)
+}
+
+model PracticeAttempt {
+  id            String           @id @default(uuid())
+  practiceSetId String?
+  practiceSet   PracticeSet?     @relation(fields: [practiceSetId], references: [id])
+  studentId     String
+  student       StudentProfile   @relation(fields: [studentId], references: [id], onDelete: Cascade)
+  score         Decimal?
+  accuracy      Decimal?
+  answers       PracticeAnswer[]
+  createdAt     DateTime         @default(now())
+}
+
+model PracticeAnswer {
+  id                String          @id @default(uuid())
+  practiceAttemptId String
+  practiceAttempt   PracticeAttempt @relation(fields: [practiceAttemptId], references: [id], onDelete: Cascade)
+  questionId        String
+  selectedOptionId  String?
+  isCorrect         Boolean
+  timeTakenMs       Int?
+}
+
+model MistakeLog {
+  id         String         @id @default(uuid())
+  studentId  String
+  student    StudentProfile @relation(fields: [studentId], references: [id], onDelete: Cascade)
+  questionId String
+  question   Question       @relation(fields: [questionId], references: [id], onDelete: Cascade)
+  errorType  String?
+  createdAt  DateTime       @default(now())
+}
+
+model TopicMastery {
+  id         String         @id @default(uuid())
+  studentId  String
+  student    StudentProfile @relation(fields: [studentId], references: [id], onDelete: Cascade)
+  topicId    String
+  topic      Topic          @relation(fields: [topicId], references: [id], onDelete: Cascade)
+  masteryPct Decimal        @default(0.0)
+  updatedAt  DateTime       @updatedAt
+
+  @@unique([studentId, topicId])
+}
+
+model Recommendation {
+  id         String   @id @default(uuid())
+  studentId  String
+  resourceId String
+  reason     String
+  createdAt  DateTime @default(now())
+}
+
+// =============================================================
+// 9. EXAM ENGINE
+// =============================================================
+
+model Test {
+  id             String       @id @default(uuid())
+  organizationId String
+  organization   Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  title          String
+  durationMins   Int          @default(60)
+  totalMarks     Decimal
+  isPublished    Boolean      @default(false)
+
+  sections  TestSection[]
+  questions TestQuestion[]
+  attempts  TestAttempt[]
+  batches   BatchTest[]
+  createdAt DateTime       @default(now())
+}
+
+model TestSection {
+  id        String         @id @default(uuid())
+  testId    String
+  test      Test           @relation(fields: [testId], references: [id], onDelete: Cascade)
+  name      String
+  order     Int
+  questions TestQuestion[]
+}
+
+model TestQuestion {
+  testId     String
+  questionId String
+  test       Test         @relation(fields: [testId], references: [id], onDelete: Cascade)
+  question   Question     @relation(fields: [questionId], references: [id], onDelete: Cascade)
+  sectionId  String?
+  section    TestSection? @relation(fields: [sectionId], references: [id], onDelete: Cascade)
+  order      Int          @default(0)
+
+  @@id([testId, questionId])
+}
+
+model TestAttempt {
+  id         String         @id @default(uuid())
+  testId     String
+  test       Test           @relation(fields: [testId], references: [id], onDelete: Cascade)
+  studentId  String
+  student    StudentProfile @relation(fields: [studentId], references: [id], onDelete: Cascade)
+  startTime  DateTime       @default(now())
+  endTime    DateTime?
+  score      Decimal?
+  percentile Decimal?
+  answers    TestAnswer[]
+}
+
+model TestAnswer {
+  id               String      @id @default(uuid())
+  testAttemptId    String
+  testAttempt      TestAttempt @relation(fields: [testAttemptId], references: [id], onDelete: Cascade)
+  questionId       String
+  question         Question    @relation(fields: [questionId], references: [id])
+  selectedOptionId String?
+  isCorrect        Boolean
+  marksObtained    Decimal     @default(0.0)
+  timeTakenMs      Int?
+}
+
+model BatchTest {
+  batchId    String
+  testId     String
+  batch      Batch     @relation(fields: [batchId], references: [id], onDelete: Cascade)
+  test       Test      @relation(fields: [testId], references: [id], onDelete: Cascade)
+  assignedAt DateTime  @default(now())
+  startDate  DateTime?
+  endDate    DateTime?
+
+  @@id([batchId, testId])
+}
+
+// =============================================================
+// 10. LMS & COURSES
+// =============================================================
+
+model Course {
+  id             String       @id @default(uuid())
+  organizationId String
+  organization   Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  title          String
+  description    String?
+  price          Decimal      @default(0.0)
+  validityDays   Int?
+  isPublished    Boolean      @default(false)
+
+  modules     CourseModule[]
+  enrollments CourseEnrollment[]
+  createdAt   DateTime           @default(now())
+  updatedAt   DateTime           @updatedAt
+}
+
+model CourseModule {
+  id       String          @id @default(uuid())
+  courseId String
+  course   Course          @relation(fields: [courseId], references: [id], onDelete: Cascade)
+  name     String
+  order    Int
+  chapters CourseChapter[]
+}
+
+model CourseChapter {
+  id       String       @id @default(uuid())
+  moduleId String
+  module   CourseModule @relation(fields: [moduleId], references: [id], onDelete: Cascade)
+  name     String
+  order    Int
+  lessons  Lesson[]
+}
+
+model Lesson {
+  id        String           @id @default(uuid())
+  chapterId String
+  chapter   CourseChapter    @relation(fields: [chapterId], references: [id], onDelete: Cascade)
+  title     String
+  order     Int
+  resources Resource[]
+  progress  LessonProgress[]
+}
+
+model Resource {
+  id        String       @id @default(uuid())
+  conceptId String?
+  concept   Concept?     @relation(fields: [conceptId], references: [id])
+  lessonId  String?
+  lesson    Lesson?      @relation(fields: [lessonId], references: [id])
+  title     String
+  type      ResourceType
+  url       String
+  duration  Int?
+  order     Int          @default(0)
+}
+
+model CourseEnrollment {
+  id         String         @id @default(uuid())
+  studentId  String
+  student    StudentProfile @relation(fields: [studentId], references: [id], onDelete: Cascade)
+  courseId   String
+  course     Course         @relation(fields: [courseId], references: [id], onDelete: Cascade)
+  enrolledAt DateTime       @default(now())
+  validUntil DateTime?
+  status     String         @default("ACTIVE")
+}
+
+model CourseProgress {
+  id          String         @id @default(uuid())
+  studentId   String
+  student     StudentProfile @relation(fields: [studentId], references: [id], onDelete: Cascade)
+  courseId    String
+  progressPct Decimal        @default(0.0)
+}
+
+model LessonProgress {
+  id        String  @id @default(uuid())
+  lessonId  String
+  lesson    Lesson  @relation(fields: [lessonId], references: [id], onDelete: Cascade)
+  studentId String
+  completed Boolean @default(false)
+}
+
+// =============================================================
+// 11. DOUBTS SYSTEM
+// =============================================================
+
+model Doubt {
+  id          String            @id @default(uuid())
+  studentId   String
+  student     StudentProfile    @relation(fields: [studentId], references: [id], onDelete: Cascade)
+  title       String
+  description String
+  status      String            @default("OPEN")
+  messages    DoubtMessage[]
+  attachments DoubtAttachment[]
+  assignments DoubtAssignment[]
+  createdAt   DateTime          @default(now())
+}
+
+model DoubtMessage {
+  id        String   @id @default(uuid())
+  doubtId   String
+  doubt     Doubt    @relation(fields: [doubtId], references: [id], onDelete: Cascade)
+  senderId  String
+  content   String
+  createdAt DateTime @default(now())
+}
+
+model DoubtAttachment {
+  id      String @id @default(uuid())
+  doubtId String
+  doubt   Doubt  @relation(fields: [doubtId], references: [id], onDelete: Cascade)
+  url     String
+}
+
+model DoubtAssignment {
+  id        String         @id @default(uuid())
+  doubtId   String
+  doubt     Doubt          @relation(fields: [doubtId], references: [id], onDelete: Cascade)
+  teacherId String
+  teacher   TeacherProfile @relation(fields: [teacherId], references: [id], onDelete: Cascade)
+}
+
+// =============================================================
+// 12. AI 
+// =============================================================
+
+model AISession {
+  id        String      @id @default(uuid())
+  studentId String
+  messages  AIMessage[]
+  createdAt DateTime    @default(now())
+}
+
+model AIMessage {
+  id        String    @id @default(uuid())
+  sessionId String
+  session   AISession @relation(fields: [sessionId], references: [id], onDelete: Cascade)
+  role      String
+  content   String
+  createdAt DateTime  @default(now())
+}
+
+model AIUsage {
+  id        String   @id @default(uuid())
+  userId    String
+  tokens    Int
+  createdAt DateTime @default(now())
+}
+
+model AIKnowledgeSource {
+  id        String              @id @default(uuid())
+  name      String
+  type      String
+  documents KnowledgeDocument[]
+}
+
+model KnowledgeDocument {
+  id       String            @id @default(uuid())
+  sourceId String
+  source   AIKnowledgeSource @relation(fields: [sourceId], references: [id], onDelete: Cascade)
+  url      String
+}
+
+// =============================================================
+// 13. PAYMENTS & FEES
+// =============================================================
+
+model Order {
+  id        String      @id @default(uuid())
+  userId    String
+  user      User        @relation(fields: [userId], references: [id])
+  total     Decimal
+  status    OrderStatus @default(PENDING)
+  items     OrderItem[]
+  createdAt DateTime    @default(now())
+}
+
+model OrderItem {
+  id        String  @id @default(uuid())
+  orderId   String
+  order     Order   @relation(fields: [orderId], references: [id], onDelete: Cascade)
+  productId String
+  price     Decimal
+  quantity  Int     @default(1)
+}
+
+model Payment {
+  id        String        @id @default(uuid())
+  userId    String
+  user      User          @relation(fields: [userId], references: [id])
+  amount    Decimal
+  currency  String        @default("INR")
+  status    PaymentStatus @default(PENDING)
+  purpose   String
+  createdAt DateTime      @default(now())
+}
+
+model Refund {
+  id        String   @id @default(uuid())
+  paymentId String
+  amount    Decimal
+  reason    String
+  createdAt DateTime @default(now())
+}
+
+model Invoice {
+  id        String   @id @default(uuid())
+  orderId   String
+  url       String
+  createdAt DateTime @default(now())
+}
+
+model Coupon {
+  id        String   @id @default(uuid())
+  code      String   @unique
+  discount  Decimal
+  expiresAt DateTime
+}
+
+model FeeStructure {
+  id             String       @id @default(uuid())
+  organizationId String
+  organization   Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  name           String
+  amount         Decimal
+  students       StudentFee[]
+}
+
+model StudentFee {
+  id             String           @id @default(uuid())
+  studentId      String
+  student        StudentProfile   @relation(fields: [studentId], references: [id], onDelete: Cascade)
+  feeStructureId String
+  feeStructure   FeeStructure     @relation(fields: [feeStructureId], references: [id])
+  totalAmount    Decimal
+  installments   FeeInstallment[]
+}
+
+model FeeInstallment {
+  id           String       @id @default(uuid())
+  studentFeeId String
+  studentFee   StudentFee   @relation(fields: [studentFeeId], references: [id], onDelete: Cascade)
+  amount       Decimal
+  dueDate      DateTime
+  status       String       @default("PENDING")
+  payments     FeePayment[]
+}
+
+model FeePayment {
+  id            String         @id @default(uuid())
+  installmentId String
+  installment   FeeInstallment @relation(fields: [installmentId], references: [id], onDelete: Cascade)
+  amountPaid    Decimal
+  paidAt        DateTime       @default(now())
+}
+
+// =============================================================
+// 14. COMMUNICATION
+// =============================================================
+
+model Notification {
+  id         String   @id @default(uuid())
+  senderId   String?
+  sender     User?    @relation("Sender", fields: [senderId], references: [id])
+  receiverId String
+  receiver   User     @relation("Receiver", fields: [receiverId], references: [id], onDelete: Cascade)
+  title      String
+  body       String
+  isRead     Boolean  @default(false)
+  createdAt  DateTime @default(now())
+}
+
+model NotificationTemplate {
+  id      String @id @default(uuid())
+  name    String
+  content String
+}
+
+model NotificationPreference {
+  id     String  @id @default(uuid())
+  userId String  @unique
+  email  Boolean @default(true)
+  sms    Boolean @default(true)
+  push   Boolean @default(true)
+}
+
+model Announcement {
+  id        String   @id @default(uuid())
+  title     String
+  content   String
+  createdAt DateTime @default(now())
+}
+
+model Conversation {
+  id        String    @id @default(uuid())
+  name      String?
+  users     User[]    @relation("UserConversations")
+  messages  Message[]
+  createdAt DateTime  @default(now())
+}
+
+model Message {
+  id             String       @id @default(uuid())
+  conversationId String
+  conversation   Conversation @relation(fields: [conversationId], references: [id], onDelete: Cascade)
+  senderId       String
+  sender         User         @relation("UserMessages", fields: [senderId], references: [id], onDelete: Cascade)
+  content        String
+  createdAt      DateTime     @default(now())
+}
+
+// =============================================================
+// 15. WHITE LABEL APP
+// =============================================================
+
+model App {
+  id             String            @id @default(uuid())
+  organizationId String
+  organization   Organization      @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  name           String
+  bundleId       String            @unique
+  branding       AppBranding?
+  config         AppConfiguration?
+  builds         AppBuild[]
+  versions       AppVersion[]
+}
+
+model AppBranding {
+  id      String @id @default(uuid())
+  appId   String @unique
+  app     App    @relation(fields: [appId], references: [id], onDelete: Cascade)
+  logoUrl String
+  colors  Json
+}
+
+model AppConfiguration {
+  id       String @id @default(uuid())
+  appId    String @unique
+  app      App    @relation(fields: [appId], references: [id], onDelete: Cascade)
+  features Json
+}
+
+model AppBuild {
+  id        String   @id @default(uuid())
+  appId     String
+  app       App      @relation(fields: [appId], references: [id], onDelete: Cascade)
+  platform  String
+  version   String
+  url       String
+  createdAt DateTime @default(now())
+}
+
+model AppVersion {
+  id           String   @id @default(uuid())
+  appId        String
+  app          App      @relation(fields: [appId], references: [id], onDelete: Cascade)
+  version      String
+  releaseNotes String?
+  releasedAt   DateTime @default(now())
+}
+
+// =============================================================
+// 16. AI USAGE
+// =============================================================
+
+enum AIOperationType {
+  QUESTION_GEN
+  DOUBT_SOLVE
+  TRANSLATION
+  OTHER
+}
+
+model AIUsageLog {
+  id             String          @id @default(uuid())
+  organizationId String
+  organization   Organization    @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  operationType  AIOperationType
+  tokensUsed     Int
+  userId         String?
+  user           User?           @relation(fields: [userId], references: [id], onDelete: SetNull)
+  metadata       Json?
+  createdAt      DateTime        @default(now())
+}

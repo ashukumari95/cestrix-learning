@@ -1,0 +1,446 @@
+﻿dY?¢ Cestrix Learning â?" Super Admin Sidebar
+â"Oâ"?â"?â"?â"?â"?â"?â"?â"?â"?â"?â"?â"?â"?â"?â"?â"?â"?â"?â"?â"?â"?â"?â"?â"?â"?â"?â"?â"?â"?â"?â"?
+â", CESTRIX LEARNING             â",
+â", Super Admin                  â",
+â"oâ"?â"?â"?â"?â"?â"?â"?â"?â"?â"?â"?â"?â"?â"?â"?â"?â"?â"?â"?â"?â"?â"?â"?â"?â"?â"?â"?â"?â"?â"?â"
+â",                              â",
+â", dY?  Dashboard                 â",
+â",                              â",
+â", dY?¢ Organizations             â",
+â",    â"oâ"? All Organizations      â",
+â",    â"oâ"? Add Organization       â",
+â",    â"oâ"? Active                 â",
+â",    â"oâ"? Trial                  â",
+â",    â""â"? Suspended              â",
+â",                              â",
+â", dY`¥ Users                     â",
+â",    â"oâ"? All Users              â",
+â",    â"oâ"? Students               â",
+â",    â"oâ"? Teachers               â",
+â",    â"oâ"? Parents                â",
+â",    â"oâ"? Coaching Admins        â",
+â",    â""â"? Staff                  â",
+â",                              â",
+â", dY?« Branches                  â",
+â",                              â",
+â", dY"s Academic Setup            â",
+â",    â"oâ"? Classes                â",
+â",    â"oâ"? Boards                 â",
+â",    â"oâ"? Subjects               â",
+â",    â"oâ"? Courses                â",
+â",    â""â"? Academic Structure     â",
+â",                              â",
+â", dY"± Apps & White Label        â",
+â",    â"oâ"? Master App             â",
+â",    â"oâ"? Client Apps            â",
+â",    â"oâ"? App Branding           â",
+â",    â""â"? App Builds             â",
+â",                              â",
+â", dY'3 Subscriptions & Billing   â",
+â",    â"oâ"? Plans                  â",
+â",    â"oâ"? Subscriptions          â",
+â",    â"oâ"? Payments               â",
+â",    â"oâ"? Invoices               â",
+â",    â""â"? Coupons                â",
+â",                              â",
+â", dY- AI Management             â",
+â",    â"oâ"? AI Usage               â",
+â",    â"oâ"? AI Costs               â",
+â",    â"oâ"? AI Configuration       â",
+â",    â""â"? Knowledge Base         â",
+â",                              â",
+â", dY"" Notifications             â",
+â",    â"oâ"? Push Notifications     â",
+â",    â"oâ"? Email                  â",
+â",    â"oâ"? SMS                    â",
+â",    â""â"? Templates              â",
+â",                              â",
+â", dY"S Reports & Analytics       â",
+â",                              â",
+â", dY"? Roles & Permissions       â",
+â",                              â",
+â", âsTï,? System Settings           â",
+â",                              â",
+â", dY"? Audit Logs                â",
+â",                              â",
+â"oâ"?â"?â"?â"?â"?â"?â"?â"?â"?â"?â"?â"?â"?â"?â"?â"?â"?â"?â"?â"?â"?â"?â"?â"?â"?â"?â"?â"?â"?â"?â"
+â", dY` Aashu                     â",
+â",    Super Admin               â",
+â",    âsT Settings  â+ª Logout     â",
+â""â"?â"?â"?â"?â"?â"?â"?â"?â"?â"?â"?â"?â"?â"?â"?â"?â"?â"?â"?â"?â"?â"?â"?â"?â"?â"?â"?â"?â"?â"?â"~
+à²à¥╪àà¿à" à?à important change
+Branches ko global Super Admin sidebar mein prominent module banane ki zarurat nahi hai.
+Branch primarily organization ke andar honi chahiye.
+For example:
+Organizations
+   â+"
+DK Mishra Mathematics
+   â+"
+Organization Details
+   â"oâ"?â"? Overview
+   â"oâ"?â"? Branches
+   â"oâ"?â"? Admins
+   â"oâ"?â"? Teachers
+   â"oâ"?â"? Students
+   â"oâ"?â"? Subscription
+   â"oâ"?â"? Branding
+   â""â"?â"? Settings
+Isse architecture clean rahega.
+1. dY?  Dashboard
+Super Admin login karte hi ye screen open hogi.
+Top KPI Cards
+Total Organizations
+       128
+Active Organizations
+       104
+Trial Organizations
+        18
+Suspended
+         6
+Second row:
+Total Students     Total Teachers
+   24,850              1,240
+Monthly Revenue    AI Usage
+   â,14,82,000          1.8M
+Dashboard ke neeche
+Organization Growth
+Revenue Overview
+New Signups
+Active Users
+Trial Expiring Soon
+Recent Payments
+System Alerts
+2. dY?¢ Organizations
+Ye Super Admin ka sabse important module hoga.
+List:
+Organization
+Admin
+Students
+Plan
+Status
+Trial
+Action
+DK Mishra Mathematics
+Admin
+520
+Pro
+Active
+â?"
+View
+ABC Academy
+Admin
+850
+Enterprise
+Active
+â?"
+View
+XYZ Coaching
+Admin
+120
+Trial
+Trial
+8 days
+View
+Add Organization
+Fields:
+Organization Name
+Logo
+Primary Contact
+Email
+Phone
+Address
+City
+State
+Website
+Domain
+Plan
+Trial Duration
+Status
+3. dY`¥ Users
+Global user management.
+Sub-menu
+All Users
+Students
+Teachers
+Parents
+Coaching Admins
+Staff
+Super Admin yahan poore Cestrix system ke users dekh sakta hai.
+Lekin tenant isolation maintain rahega.
+4. dY"s Academic Setup
+Yahan global master academic data maintain hoga.
+Classes
+Boards
+Subjects
+Courses
+Academic Years
+Example:
+Class 12
+   â+"
+Mathematics
+   â+"
+Chapters
+   â+"
+Topics
+Lekin DK Mishra ke actual questions/notes/test content ko Super Admin global academic setup mein mix mat karna.
+Woh tenant-level content hona chahiye.
+5. dY"± Apps & White Label
+Ye tumhare SaaS ka very important module hai.
+Structure:
+Apps & White Label
+â",
+â"oâ"?â"? Master App
+â"oâ"?â"? Client Apps
+â"oâ"?â"? Branding
+â"oâ"?â"? App Configuration
+â""â"?â"? Build Management
+Client Apps
+DK Mishra Mathematics
+   Android
+   Package ID
+   Version
+   Current Build
+   Play Store Status
+Example:
+App Name:
+DK Mishra Mathematics
+Package:
+com.cestrix.dkmishra
+Version:
+1.0.8
+Status:
+Published
+6. dY'3 Subscriptions & Billing
+Cestrix ka SaaS business yahin manage hoga.
+Plans
+Subscriptions
+Payments
+Invoices
+Coupons
+Example plans:
+Starter
+Professional
+Enterprise
+White Label
+Organization:
+DK Mishra
+       â+"
+Professional
+       â+"
+â,1X/month
+       â+"
+Active
+7. dY- AI Management
+Global AI control.
+AI Usage
+AI Costs
+AI Configuration
+Knowledge Base
+Tum dekh sakoge:
+Organization
+AI Questions
+Tokens
+Estimated Cost
+Example:
+DK Mishra
+12,450 AI requests
+â,11,820 estimated cost
+Important: Super Admin yahan AI ka global configuration control karega, lekin DK Mishra ka approved content/knowledge base tenant-specific ho sakta hai.
+8. dY"" Notifications
+Central notification management:
+Push
+Email
+SMS
+WhatsApp
+Templates
+Example templates:
+Attendance Absent
+Test Result
+Fee Reminder
+New Study Material
+Course Expiry
+Announcement
+9. dY"S Reports & Analytics
+Super Admin ko platform-level analytics chahiye.
+Organization Growth
+User Growth
+Student Activity
+Revenue
+Subscription Analytics
+Course Sales
+Test Activity
+AI Usage
+App Usage
+Yahan DK Mishra ka detailed student performance nahi dikhana chahiye unless Super Admin has authorized tenant-level access.
+10. dY"? Roles & Permissions
+Is module ko seriously design karna.
+Roles
+Permissions
+Role Assignment
+Example:
+COACHING_ADMIN
+students.view
+students.create
+students.edit
+teachers.view
+attendance.view
+tests.create
+results.view
+Aur:
+SUPER_ADMIN
+organizations.*
+users.*
+subscriptions.*
+system.*
+11. âsTï,? System Settings
+Global settings:
+General
+Security
+Authentication
+Email
+SMS
+Push
+Payment Gateway
+Storage
+AI
+API
+Domains
+Maintenance
+12. dY"? Audit Logs
+Ye production SaaS ke liye important hai.
+Example:
+Admin
+Action
+Organization
+IP
+Timestamp
+Example:
+Super Admin
+Suspended Organization
+XYZ Academy
+26 Sep 2026 02:15 PM
+Sidebar ko aur professional kaise rakhen?
+Main 20 items ek saath visible nahi rakhunga.
+Final visual structure:
+dY?  Dashboard
+dY?¢ Organizations
+dY`¥ Users
+dY"s Academic
+   Classes
+   Boards
+   Subjects
+   Courses
+dY"± Apps
+   Master App
+   Client Apps
+   White Label
+dY'3 Billing
+   Plans
+   Subscriptions
+   Payments
+   Invoices
+dY- AI
+dY"" Communications
+dY"S Analytics
+dY"? Access Control
+âsTï,? System
+dY"? Audit Logs
+Aur ek important UX rule:
+Super Admin sidebar mein Student, Teacher, Parent ke individual operational modules directly top-level par mat bhar do.
+Super Admin ka focus:
+Cestrix platform â+' Organizations â+' SaaS management â+' infrastructure â+' billing â+' analytics
+hoga.
+Coaching Admin ka focus:
+Students â+' Teachers â+' Batches â+' Attendance â+' Tests â+' LMS â+' Fees â+' Reports
+hoga.
+Ye separation abhi se rakhoge to baad mein system bahut clean aur scalable rahega.
+dYs? Step-by-Step Development Plan
+Step 1: System Design & Architecture Setup (Foundation)
+Sabse pehle system ka base majboot karna hoga, kyunki multi-tenancy mein data isolation bahut zaroori hai.
+Tech Stack Finalization:
+Backend:A Node.js + Express.js + TypeScript
+Database:A PostgreSQL (with Prisma ORM)
+Frontend (Admins/Web):A React + TypeScript (Vite ya Next.js)
+Mobile App:A React Native (Expo ya CLI)
+Database Schema Design (Crucial):
+Har table meinA organization_idA (Tenant ID) zaroor hona chahiye taaki ek coaching ka data dusre ko na dikhe.
+Global tables (Plans, Master Academic Data) aur Tenant tables (Students, Courses, Tests) ko alag design karna hoga.
+Authentication & Authorization:
+JWT (JSON Web Tokens) with Refresh Tokens.
+RBAC (Role-Based Access Control):A SUPER_ADMIN,A COACHING_ADMIN,A TEACHER,A STUDENT,A PARENT.
+Project Initialization:
+GitHub/GitLab repository setup (Monorepo ya alag-alag repos Backend, Frontend, App ke liye).
+CI/CD pipelines basic setup.
+Step 2: Backend Development - Phase 1 (Core & Super Admin)
+Sabse pehle Backend aur Super Admin API banegi, jisse tenant (Organizations) create kiye ja sakein.
+Super Admin Module (API & Frontend):
+Dashboard (KPIs).
+Organizations (CRUD):A Coaching institutes ko add karna, unki details aur status (Active, Trial, Suspended) manage karna.
+Plans & Subscriptions:A SaaS billing models create karna.
+Coaching Admin Module (API & Frontend):
+Organization-level settings aur branding.
+Academic Setup:A Classes, Boards, Subjects, Batches banana.
+User Management:A Teachers, Students, Parents ko add karna (Dashboard pe).
+Step 3: LMS & Content Engine (The Core Product)
+Ab hum padhai aur content par focus karenge, jo system ki jaan hai.
+Course Creation:
+Courses -> Chapters -> Topics -> Subtopics ki hierarchy banana.
+Resource Management:
+Cloud Storage (AWS S3, Cloudinary) integrate karna PDF aur Videos ke liye.
+Video streaming architecture (HLS/Dash for secure streaming) implement karna.
+Question Bank & Practice Engine (Maths Specific):
+Maths equations (LaTeX/MathJax) support.
+Topic-wise, Subtopic-wise practice sets.
+Difficulty levels (Easy, Medium, Hard).
+Step 4: Assessment & Exam System
+Test engine bahut robust hona chahiye, especially for competitive exams.
+Test Creation:
+Timer, marking scheme (negative marking).
+Different types of tests (Topic, Full, Mock).
+Exam Environment (Student view):
+Navigation, Mark for review, Auto-save, Auto-submit.
+Evaluation & Result Generation:
+Instant result calculation.
+Rank, Percentile, Accuracy, Subject/Topic-wise weak area analysis.
+Mistake Book:A Galat questions ka alag section banana.
+Step 5: E-commerce & Payments (Online Course Selling)
+System ko profitable banane ke liye.
+Course Storefront (Public Website):
+Landing page, Course details, Demo lectures.
+Payment Gateway Integration:
+Razorpay, Stripe ya PhonePe integration.
+Coupons, discounts logic.
+Webhooks setup for automatic enrollment after successful payment.
+Step 6: Student Android App & Web Portal
+Ab student ke consume karne ke liye interfaces develop honge.
+Authentication:A Login (Email/Phone OTP).
+Dashboard:A Upcoming classes, Pending tests, Recent results.
+My Courses (LMS Viewer):A Video player, PDF viewer, Practice mode.
+Test UI:A Mobile-optimized test taking experience.
+Offline/Hybrid Support:A Student types ko handle karna aur relevant content dikhana.
+Step 7: Advanced Modules & Hardware Integration
+Operations ko smooth karne ke liye.
+Attendance & Biometric:
+Teacher-side manual attendance.
+Biometric machine SDK/API integration for automated attendance logging.
+Notification Engine:
+Firebase Cloud Messaging (FCM) for Push notifications.
+SMS/Email gateways (Twilio, AWS SES, Msg91).
+Automated alerts (Fee reminders, Absent alerts).
+Step 8: AI Integration (The Intelligence Layer)
+Jaisa aapne plan kiya, AI ko end mein integrate karna best hai jab core data ready ho.
+AI Question/Photo Doubt Solver:
+Vision API (e.g., Gemini Vision, GPT-4V) to read math problems from images.
+Step-by-step solution generation using LLMs.
+AI Analytics:
+Student progress data analyse karke "Weak Topic Recommendations" dena.
+Knowledge Base:A Organization-specific AI tuning taaki answers DK Mishra ke material se align karein.
+Step 9: Testing, Optimization & Deployment
+Production ready karna.
+Testing:A Load testing, Security testing, UAT (User Acceptance Testing).
+Infrastructure:A Deploy on AWS/Vercel/Railway. Set up auto-scaling for high traffic during exams.
+App Publishing:A Master App ya Client Apps (White Label) ko Google Play Store par push karna.
+dY'¡ Kuch Important Tips Architecture Ke Liye
+Tenant Isolation (Data Security):A Aapne kaha ki Super Admin ke paas access hoga, par Super Admin sidebar mein coaching ka operational data na ho. Yeh bahut accha decision hai. Har API request mein tenant ID (organization_id) check hona chahiye.
+White-Label Apps (SaaS Growth):A Future mein "Apps & White Label" module se aap dusre coachings ko unke naam ki app de payenge (Jaise Classplus karta hai). Iske liye CI/CD (Fastlane) automate karna hoga taaki ek click mein naya APK/AAB ban sake.
+Maths Content:A Mathematics platform hone ki wajah se, saare text fields meinA LaTeXA support build karna shuru se hi zaroori hai.
