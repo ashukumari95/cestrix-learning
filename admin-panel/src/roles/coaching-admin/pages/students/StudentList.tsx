@@ -101,13 +101,21 @@ export const StudentList = () => {
       try {
         const response = await api.get('/coaching/users/students');
         if (response.data) {
-          const mapped = response.data.map((u: any) => ({
+          // Handle multiple API response shapes safely
+          const rawList: any[] =
+            Array.isArray(response.data) ? response.data :
+            Array.isArray(response.data.data) ? response.data.data :
+            Array.isArray(response.data.items) ? response.data.items :
+            Array.isArray(response.data.students) ? response.data.students :
+            [];
+
+          const mapped = rawList.map((u: any) => ({
             id: u.id,
             admissionNo: u.studentProfile?.enrollmentNumber || 'N/A',
             rollNo: 'N/A',
             name: u.name,
             phone: u.phone || 'N/A',
-            initials: u.name.substring(0, 2).toUpperCase(),
+            initials: u.name?.substring(0, 2).toUpperCase() || 'ST',
             class: u.studentProfile?.classLevel?.name || 'N/A',
             board: 'N/A',
             batch: u.studentProfile?.batches?.[0]?.batch?.name || 'Unassigned',
@@ -123,7 +131,7 @@ export const StudentList = () => {
           setStudents(mapped);
         }
       } catch (err) {
-        console.error("Failed to fetch students. Using mock data.", err);
+        console.error("Failed to fetch students.", err);
       }
     };
     fetchStudents();
