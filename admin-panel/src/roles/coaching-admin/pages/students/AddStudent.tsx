@@ -339,18 +339,23 @@ const Step3 = ({ data, set }: { data: FormData; set: (k: keyof FormData, v: any)
 const Step4 = ({ data, set }: { data: FormData; set: (k: keyof FormData, v: any) => void }) => {
   const [batches, setBatches] = React.useState<any[]>([]);
   const [loading, setLoading] = React.useState(true);
+  const [fetchError, setFetchError] = React.useState(false);
 
   React.useEffect(() => {
     const fetchBatches = async () => {
       try {
         const res = await api.get('/coaching/academic/batches');
-        if (res.data && res.data.data && Array.isArray(res.data.data.items)) {
-          setBatches(res.data.data.items);
-        } else if (Array.isArray(res.data)) {
-          setBatches(res.data);
-        }
+        // Handle multiple response shapes safely
+        const list: any[] =
+          Array.isArray(res.data) ? res.data :
+          Array.isArray(res.data?.data) ? res.data.data :
+          Array.isArray(res.data?.data?.items) ? res.data.data.items :
+          Array.isArray(res.data?.items) ? res.data.items :
+          [];
+        setBatches(list);
       } catch (err) {
         console.error(err);
+        setFetchError(true);
       } finally {
         setLoading(false);
       }
@@ -360,17 +365,36 @@ const Step4 = ({ data, set }: { data: FormData; set: (k: keyof FormData, v: any)
 
   return (
     <div className="space-y-4">
-      <p className="text-xs text-gray-500">
-        Select the batch this student will be enrolled in. Each batch has limited capacity.
-      </p>
+      <div className="flex items-center justify-between">
+        <p className="text-xs text-gray-500">
+          Select the batch this student will be enrolled in. <span className="text-blue-500 font-medium">Optional — can be assigned later.</span>
+        </p>
+        {data.batchId && (
+          <button onClick={() => { set('batchId', ''); set('batchName', ''); }}
+            className="text-xs text-red-500 hover:text-red-600 flex items-center gap-1">
+            <X size={11} /> Clear
+          </button>
+        )}
+      </div>
 
       {loading ? (
-        <p className="text-sm text-gray-400">Loading batches...</p>
+        <div className="flex items-center gap-2 text-sm text-gray-400 py-4">
+          <div className="w-4 h-4 border-2 border-blue-500 border-t-transparent rounded-full animate-spin" />
+          Loading batches...
+        </div>
+      ) : fetchError ? (
+        <div className="p-4 rounded-xl text-sm text-amber-700" style={{ background: '#fffbeb', border: '1px solid #fde68a' }}>
+          ⚠️ Could not load batches. You can skip this step and assign a batch later from the student's profile.
+        </div>
+      ) : batches.length === 0 ? (
+        <div className="p-4 rounded-xl text-sm text-gray-500" style={{ background: '#f9fafb', border: '1px dashed #e5e7eb' }}>
+          No batches found. Create batches first, or skip and assign later.
+        </div>
       ) : (
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
           {batches.map((b: any) => {
             const selected = data.batchId === b.id;
-            const color = '#1a5dc9'; // Default color
+            const color = '#1a5dc9';
             return (
               <button key={b.id} onClick={() => { set('batchId', b.id); set('batchName', b.name); }}
                 className={`text-left p-4 rounded-2xl border-2 transition-all ${
@@ -396,17 +420,17 @@ const Step4 = ({ data, set }: { data: FormData; set: (k: keyof FormData, v: any)
       )}
 
       {data.batchId && (
-      <div className="mt-4">
-        <Field label="Roll Number (optional)" id="rollNo">
-          <div className="relative">
-            <Hash size={14} className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" />
-            <Input id="rollNo" value={data.rollNo} onChange={e => set('rollNo', e.target.value)}
-              placeholder="Auto-assigned if empty" className="pl-9" />
-          </div>
-        </Field>
-      </div>
-    )}
-  </div>
+        <div className="mt-2">
+          <Field label="Roll Number (optional)" id="rollNo">
+            <div className="relative">
+              <Hash size={14} className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" />
+              <Input id="rollNo" value={data.rollNo} onChange={e => set('rollNo', e.target.value)}
+                placeholder="Auto-assigned if empty" className="pl-9" />
+            </div>
+          </Field>
+        </div>
+      )}
+    </div>
   );
 };
 
@@ -524,7 +548,7 @@ export const AddStudent = () => {
     if (step === 1) return !!(data.fullName.trim() && data.mobile.trim() && data.gender);
     if (step === 2) return !!(data.fatherName.trim() && data.fatherMobile.trim());
     if (step === 3) return !!(data.class && data.board && data.targetExam);
-    if (step === 4) return !!data.batchId;
+    if (step === 4) return true; // Batch is optional — can be assigned later
     return true;
   };
 
